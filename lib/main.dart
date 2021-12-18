@@ -222,13 +222,13 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       final planeTap = ar.firstWhereOrNull(
             (tap) => tap.type == ARKitHitTestResultType.existingPlaneUsingExtent,
       );
-      if (planeTap != null) {
-        _onPlaneTapHandler(planeTap.worldTransform);
+
+        _onPlaneTapHandler(planeTap!.worldTransform, planeTap!.distance);
         distance = planeTap.distance;
         setState(() {
 
         });
-      }
+
     };
   }
 
@@ -271,7 +271,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
     controller.add(node!, parentNodeName: anchor.nodeName);
   }
 
-  void _onPlaneTapHandler(Matrix4 transform) {
+  void _onPlaneTapHandler(Matrix4 transform, double deviceDistance) {
     final position = vector.Vector3(
       transform.getColumn(3).x,
       transform.getColumn(3).y,
@@ -298,7 +298,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       final lineNode = ARKitNode(geometry: line);
       arkitController.add(lineNode);
 
-      final distance = _calculateDistanceBetweenPoints(position, lastPosition!);
+      final distance = deviceDistance.toString();
       final point = _getMiddleVector(position, lastPosition!);
       _drawText(distance, point);
     }
