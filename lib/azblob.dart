@@ -9,8 +9,9 @@ Future uploadImageToAzure(BuildContext context, Uint8List content) async {
   try {
     var now = DateTime.now();
     String fileName = "test${now.toString()}";
+    String? key = dotenv.env['CONNECTION_KEY'];
     // read file as Uint8List
-    var storage = AzureStorage.parse(dotenv.env['CONNECTION_KEY']);
+    var storage = AzureStorage.parse(key!);
     String container = "images";
     // get the mine type of the file
     await storage.putBlob(
