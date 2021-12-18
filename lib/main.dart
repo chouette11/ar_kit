@@ -160,9 +160,9 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                           ),
                         ),
                         Text(
-                          "デバイスと円の距離から円大きさを求めます",
+                          "デバイスと円の距離から円の大きさを求めます",
                           style: TextStyle(
-                            height: 1
+                            height: 0,
                           ),
                         ),
                         Padding(
@@ -299,7 +299,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       arkitController.add(lineNode);
       lastPosition = position;
 
-      final distance = deviceDistance.toString();
+      final distance = "${(deviceDistance * 100).toStringAsFixed(2)} cm";
       final point = _getMiddleVector(position, lastPosition!);
       _drawText(distance, point);
     }
