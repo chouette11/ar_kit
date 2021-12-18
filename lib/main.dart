@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
       appBar: AppBar(
         title: const Text('ARKit Demo'),
       ),
-      body:
-      ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
+      body: ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
     );
   }
 }
@@ -195,7 +194,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   void _drawText(String text, vector.Vector3 point) {
     final textGeometry = ARKitText(
       text: text,
-      extrusionDepth: 1,
+      extrusionDepth: 0,
       materials: [
         ARKitMaterial(
           diffuse: ARKitMaterialProperty.color(Colors.red),
