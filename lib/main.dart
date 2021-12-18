@@ -1,13 +1,18 @@
 import 'dart:math' as math;
-import 'package:ar_kit/camera.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
 void main() => runApp(MaterialApp(home: MyApp()));
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final samples = [
@@ -20,11 +25,33 @@ class MyApp extends StatelessWidget {
       ),
     ];
 
+
+    XFile _imageFile;
+    final ImagePicker _picker = ImagePicker();
+
+    dynamic _pickImageError;
+    void onImageButtonPressed(ImageSource source,
+        {BuildContext? context, bool isMultiImage = false}) async {
+      try {
+        final pickedFile = await _picker.pickImage(source: source);
+        setState(() {
+          _imageFile = pickedFile!;
+        });
+      } catch (e) {
+        setState(() {
+          _pickImageError = e;
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('ARKit Demo'),
       ),
-      body: MyHomePage(title: "aaa",),
+      body: ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => onImageButtonPressed,
+      ),
     );
   }
 }
