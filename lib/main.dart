@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
-void main() async {
+Future<void> main() async {
   await dotenv.load();
 
   String envKey = dotenv.get('CONNECTION_KEY');
@@ -184,12 +184,15 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
         ],
       ),
     ),
-    floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          onImageButtonPressed(ImageSource.camera, context: context);
-          isCapture = !isCapture;
-          setState(() {});
-        }
+    floatingActionButton: Visibility(
+      visible: !isCapture,
+      child: FloatingActionButton(
+          onPressed: () {
+            onImageButtonPressed(ImageSource.camera, context: context);
+            isCapture = !isCapture;
+            setState(() {});
+          }
+      ),
     ),
   );
 
