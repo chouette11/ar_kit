@@ -4,7 +4,9 @@ import 'dart:typed_data';
 import 'package:ar_kit/azblob.dart';
 import 'package:ar_kit/webview.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
@@ -19,59 +21,22 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    final samples = [
-      Sample(
-        'Distance tracking',
-        'Detects horizontal plane and track distance on it.',
-        Icons.blur_on,
-            () => Navigator.of(context).push<void>(
-            MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
-      ),
-    ];
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 48,
+        backgroundColor: HexColor("#ff99cc"),
         title: const Text('ARKit Demo'),
       ),
-      body: ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
-    );
-  }
-}
-
-class SampleItem extends StatelessWidget {
-  const SampleItem({
-    required this.item,
-    Key? key,
-  }) : super(key: key);
-  final Sample item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () => item.onTap(),
-        child: ListTile(
-          leading: Icon(item.icon),
-          title: Text(
-            item.title,
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          subtitle: Text(
-            item.description,
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text("aa"),
+          onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
         ),
       ),
     );
   }
-}
-
-class Sample {
-  const Sample(this.title, this.description, this.icon, this.onTap);
-  final String title;
-  final String description;
-  final IconData icon;
-  final Function onTap;
 }
 
 class DistanceTrackingPage extends StatefulWidget {
@@ -85,6 +50,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   var _imageFile;
   final ImagePicker _picker = ImagePicker();
   bool isCapture = false;
+  bool isModal = true;
   double distance = 0;
 
   dynamic _pickImageError;
@@ -121,15 +87,16 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       child:
       isCapture ?
       Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-                height: MediaQuery.of(context).size.height - 200,
+                height: MediaQuery.of(context).size.height * 0.64,
                 child: Image.file(File(_imageFile.path))),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               "これでいいですか？",
               style: TextStyle(
@@ -145,8 +112,6 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                 onPressed: () => Navigator.of(context).push<void>(
                     MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
               ),
-              RaisedButton(onPressed: () => Navigator.of(context).push<void>(
-                  MaterialPageRoute(builder: (_) => WebViewScreen())),),
               ElevatedButton(
                 onPressed: () async {
                   Uint8List content = await _imageFile!.readAsBytes();
@@ -168,6 +133,60 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
             onARKitViewCreated: onARKitViewCreated,
             enableTapRecognizer: true,
           ),
+          Visibility(
+            visible: isModal,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.43,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(),
+                    color: Colors.white
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                            "➀円の中心をタップ！\n",
+                          style: TextStyle(
+                            fontSize: 28,
+                          ),
+                        ),
+                        Text(
+                          "デバイスと円の距離から円大きさを求めます"
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: Text(
+                            "➁右下のボタンをタップ\n",
+                            style: TextStyle(
+                              fontSize: 26,
+                            ),
+                          ),
+                        ),
+                        Text("円がどれだけ真円に近いか解析します！"),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                isModal = false;
+                                setState(() {});
+                              },
+                              child: Text("OK!"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Text(distance.toString()),
         ],
       ),
@@ -177,7 +196,10 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
           onImageButtonPressed(ImageSource.camera, context: context);
           isCapture = !isCapture;
           setState(() {});
-        }
+        },
+      child: Icon(
+        Icons.camera_alt_outlined,
+      ),
     ),
   );
 
