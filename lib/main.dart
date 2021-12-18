@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:io';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,33 +26,11 @@ class _MyAppState extends State<MyApp> {
       ),
     ];
 
-
-    XFile _imageFile;
-    final ImagePicker _picker = ImagePicker();
-
-    dynamic _pickImageError;
-    void onImageButtonPressed(ImageSource source,
-        {BuildContext? context, bool isMultiImage = false}) async {
-      try {
-        final pickedFile = await _picker.pickImage(source: source);
-        setState(() {
-          _imageFile = pickedFile!;
-        });
-      } catch (e) {
-        setState(() {
-          _pickImageError = e;
-        });
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('ARKit Demo'),
       ),
       body: ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => onImageButtonPressed,
-      ),
     );
   }
 }
@@ -93,11 +72,31 @@ class Sample {
 }
 
 class DistanceTrackingPage extends StatefulWidget {
+
   @override
   _DistanceTrackingPageState createState() => _DistanceTrackingPageState();
 }
 
 class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
+
+  var _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
+  dynamic _pickImageError;
+  void onImageButtonPressed(ImageSource source,
+      {BuildContext? context, bool isMultiImage = false}) async {
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      setState(() {
+        _imageFile = pickedFile!;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
   late ARKitController arkitController;
   ARKitPlane? plane;
   ARKitNode? node;
@@ -113,13 +112,23 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('Distance Tracking Sample')),
-    body: Container(
-      child: ARKitSceneView(
-        showFeaturePoints: true,
-        planeDetection: ARPlaneDetection.horizontal,
-        onARKitViewCreated: onARKitViewCreated,
-        enableTapRecognizer: true,
-      ),
+    body: Stack(
+      children: [
+        Container(
+          child: ARKitSceneView(
+            showFeaturePoints: true,
+            planeDetection: ARPlaneDetection.horizontal,
+            onARKitViewCreated: onARKitViewCreated,
+            enableTapRecognizer: true,
+          ),
+        ),
+        _imageFile != null ?
+        Image.file(File(_imageFile.path))
+        : Text("not Image"),
+      ],
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () => onImageButtonPressed(ImageSource.camera, context: context),
     ),
   );
 
