@@ -204,6 +204,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
     const scale = 0.001;
     final vectorScale = vector.Vector3(scale, scale, scale);
     final node = ARKitNode(
+      rotation: vector.Vector4(1, 0, 0, -0.25 * math.pi),
       geometry: textGeometry,
       position: point,
       scale: vectorScale,
