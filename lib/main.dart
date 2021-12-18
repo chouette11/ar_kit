@@ -84,7 +84,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   var _imageFile;
   final ImagePicker _picker = ImagePicker();
   bool isCapture = false;
-  var distance = 0;
+  double distance = 0;
 
   dynamic _pickImageError;
   void onImageButtonPressed(ImageSource source,
