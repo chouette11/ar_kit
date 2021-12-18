@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:ar_kit/camera.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       appBar: AppBar(
         title: const Text('ARKit Demo'),
       ),
-      body: ListView(children: samples.map((s) => SampleItem(item: s)).toList()),
+      body: MyHomePage(title: "aaa",),
     );
   }
 }
@@ -194,7 +195,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   void _drawText(String text, vector.Vector3 point) {
     final textGeometry = ARKitText(
       text: text,
-      extrusionDepth: 0,
+      extrusionDepth: 1,
       materials: [
         ARKitMaterial(
           diffuse: ARKitMaterialProperty.color(Colors.red),
