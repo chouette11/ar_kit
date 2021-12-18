@@ -9,7 +9,7 @@ Future uploadImageToAzure(BuildContext context, Uint8List content) async {
     var now = DateTime.now();
     String fileName = "test${now.toString()}";
     // read file as Uint8List
-    var storage = AzureStorage.parse('DefaultEndpointsProtocol=https;AccountName=storageaccountankir99ce;AccountKey=LYbm4AXd2NwOFSeq0xuoxQGo90QncETsh3XuhgbWcR/jHT9sXkx+hM3yLl2jdQSQzDfhXCCkZKHIcSi9APDkcQ==;EndpointSuffix=core.windows.net');
+    var storage = AzureStorage.parse('CONNECTION_KEY');
     String container = "images";
     // get the mine type of the file
     await storage.putBlob(
