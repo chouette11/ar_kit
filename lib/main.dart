@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
-void main() => runApp(MaterialApp(home: MyApp()));
+void main() => runApp(MaterialApp(theme: ThemeData(fontFamily: "Noto"),home: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
@@ -140,7 +140,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                 padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.43,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(),
@@ -150,26 +150,37 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                     padding: const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                             "➀円の中心をタップ！\n",
                           style: TextStyle(
-                            fontSize: 28,
+                            height: 1,
+                            fontSize: 26,
                           ),
                         ),
                         Text(
-                          "デバイスと円の距離から円大きさを求めます"
+                          "デバイスと円の距離から円大きさを求めます",
+                          style: TextStyle(
+                            height: 1
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 32),
                           child: Text(
                             "➁右下のボタンをタップ\n",
                             style: TextStyle(
+                              height: 1,
                               fontSize: 26,
                             ),
                           ),
                         ),
-                        Text("円がどれだけ真円に近いか解析します！"),
+                        Text(
+                            "円がどれだけ真円に近いか解析します！",
+                          style: TextStyle(
+                            height: 1
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 16),
                           child: ElevatedButton(
