@@ -123,7 +123,9 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.file(File(_imageFile.path)),
+            child: Container(
+                height: MediaQuery.of(context).size.height - 200,
+                child: Image.file(File(_imageFile.path))),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
