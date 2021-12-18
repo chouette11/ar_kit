@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:ar_kit/azblob.dart';
+import 'package:ar_kit/webview.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -144,6 +145,8 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                 onPressed: () => Navigator.of(context).push<void>(
                     MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
               ),
+              RaisedButton(onPressed: () => Navigator.of(context).push<void>(
+                  MaterialPageRoute(builder: (_) => WebViewScreen())),),
               ElevatedButton(
                 onPressed: () async {
                   Uint8List content = await _imageFile!.readAsBytes();
