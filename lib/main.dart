@@ -83,7 +83,8 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
 
   var _imageFile;
   final ImagePicker _picker = ImagePicker();
-  var isCapture = false;
+  bool isCapture = false;
+  var distance = 0;
 
   dynamic _pickImageError;
   void onImageButtonPressed(ImageSource source,
@@ -152,11 +153,16 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
           )
         ],
       )
-          : ARKitSceneView(
-        showFeaturePoints: true,
-        planeDetection: ARPlaneDetection.horizontal,
-        onARKitViewCreated: onARKitViewCreated,
-        enableTapRecognizer: true,
+          : Stack(
+        children:[
+          ARKitSceneView(
+            showFeaturePoints: true,
+            planeDetection: ARPlaneDetection.horizontal,
+            onARKitViewCreated: onARKitViewCreated,
+            enableTapRecognizer: true,
+          ),
+          Text(distance.toString()),
+        ],
       ),
     ),
     floatingActionButton: FloatingActionButton(
@@ -178,6 +184,10 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       );
       if (planeTap != null) {
         _onPlaneTapHandler(planeTap.worldTransform);
+        distance = planeTap.distance;
+        setState(() {
+
+        });
       }
     };
   }
