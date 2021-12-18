@@ -297,6 +297,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       );
       final lineNode = ARKitNode(geometry: line);
       arkitController.add(lineNode);
+      lastPosition = position;
 
       final distance = deviceDistance.toString();
       final point = _getMiddleVector(position, lastPosition!);
