@@ -5,13 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 
-Future uploadImageToAzure(BuildContext context, Uint8List content) async {
+Future uploadImageToAzure(BuildContext context, Uint8List content, String envKey) async {
   try {
     var now = DateTime.now();
     String fileName = "test${now.toString()}";
-    String? key = dotenv.env['CONNECTION_KEY'];
     // read file as Uint8List
-    var storage = AzureStorage.parse(key!);
+    var storage = AzureStorage.parse(envKey);
     String container = "images";
     // get the mine type of the file
     await storage.putBlob(

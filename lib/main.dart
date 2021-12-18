@@ -11,11 +11,16 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
 void main() async {
+  await dotenv.load();
+
+  String envKey = dotenv.get('CONNECTION_KEY');
   await dotenv.load(fileName: ".env");
-  runApp(MaterialApp(home: MyApp()));
+  runApp(MaterialApp(home: MyApp(envKey: envKey)));
 }
 
 class MyApp extends StatefulWidget {
+  MyApp({Key? key, required this.envKey}) : super(key: key);
+  final String envKey;
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -29,7 +34,7 @@ class _MyAppState extends State<MyApp> {
         'Detects horizontal plane and track distance on it.',
         Icons.blur_on,
             () => Navigator.of(context).push<void>(
-            MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
+            MaterialPageRoute(builder: (c) => DistanceTrackingPage(envKey: widget.envKey,))),
       ),
     ];
 
@@ -79,6 +84,8 @@ class Sample {
 }
 
 class DistanceTrackingPage extends StatefulWidget {
+  DistanceTrackingPage({Key? key, required this.envKey, }) : super(key: key);
+  final String envKey;
 
   @override
   _DistanceTrackingPageState createState() => _DistanceTrackingPageState();
@@ -133,7 +140,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                 child: Image.file(File(_imageFile.path))),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               "これでいいですか？",
               style: TextStyle(
@@ -141,26 +148,27 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              RaisedButton(
-                child: Text("戻る"),
-                onPressed: () => Navigator.of(context).push<void>(
-                    MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
-              ),
-              RaisedButton(onPressed: () => Navigator.of(context).push<void>(
-                  MaterialPageRoute(builder: (_) => WebViewScreen())),),
-              ElevatedButton(
-                onPressed: () async {
-                  Uint8List content = await _imageFile!.readAsBytes();
-                  await uploadImageToAzure(context, content);
-                  await Navigator.of(context).push<void>(
-                      MaterialPageRoute(builder: (_) => WebViewScreen()));
-                },
-                child: Text("決定！"),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RaisedButton(
+                  child: Text("戻る"),
+                  onPressed: () => Navigator.of(context).push<void>(
+                      MaterialPageRoute(builder: (c) => DistanceTrackingPage(envKey: widget.envKey,))),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    Uint8List content = await _imageFile!.readAsBytes();
+                    await uploadImageToAzure(context, content, widget.envKey);
+                    await Navigator.of(context).push<void>(
+                        MaterialPageRoute(builder: (_) => WebViewScreen()));
+                  },
+                  child: Text("決定！"),
+                ),
+              ],
+            ),
           )
         ],
       )
