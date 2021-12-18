@@ -11,7 +11,7 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env")
+  await dotenv.load(fileName: ".env");
   runApp(MaterialApp(home: MyApp()));
 }
 
