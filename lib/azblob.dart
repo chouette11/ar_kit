@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:azblob/azblob.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future uploadImageToAzure(BuildContext context, Uint8List content) async {
@@ -9,7 +10,7 @@ Future uploadImageToAzure(BuildContext context, Uint8List content) async {
     var now = DateTime.now();
     String fileName = "test${now.toString()}";
     // read file as Uint8List
-    var storage = AzureStorage.parse('CONNECTION_KEY');
+    var storage = AzureStorage.parse(dotenv.env['CONNECTION_KEY']);
     String container = "images";
     // get the mine type of the file
     await storage.putBlob(

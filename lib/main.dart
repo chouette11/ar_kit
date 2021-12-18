@@ -5,11 +5,15 @@ import 'package:ar_kit/azblob.dart';
 import 'package:ar_kit/webview.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
-void main() => runApp(MaterialApp(home: MyApp()));
+void main() async {
+  await dotenv.load(fileName: ".env")
+  runApp(MaterialApp(home: MyApp()));
+}
 
 class MyApp extends StatefulWidget {
   @override
