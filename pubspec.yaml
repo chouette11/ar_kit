@@ -32,6 +32,7 @@ dependencies:
   image_picker: ^0.8.4+1
   azblob: ^2.0.0
   webview_flutter: ^2.0.13
+  hexcolor: ^2.0.5
 
 dev_dependencies:
   flutter_test:
