@@ -81,6 +81,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
 
   var _imageFile;
   final ImagePicker _picker = ImagePicker();
+  var isCapture = false;
 
   dynamic _pickImageError;
   void onImageButtonPressed(ImageSource source,
@@ -112,23 +113,28 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('Distance Tracking Sample')),
-    body: Stack(
-      children: [
-        Container(
-          child: ARKitSceneView(
-            showFeaturePoints: true,
-            planeDetection: ARPlaneDetection.horizontal,
-            onARKitViewCreated: onARKitViewCreated,
-            enableTapRecognizer: true,
-          ),
-        ),
-        _imageFile != null ?
-        Image.file(File(_imageFile.path))
-        : Text("not Image"),
-      ],
+    body: Container(
+      child:
+      isCapture ?
+      Column(
+        children: [
+          Image.file(File(_imageFile.path)),
+          Text("写真です"),
+        ],
+      )
+          : ARKitSceneView(
+        showFeaturePoints: true,
+        planeDetection: ARPlaneDetection.horizontal,
+        onARKitViewCreated: onARKitViewCreated,
+        enableTapRecognizer: true,
+      ),
     ),
     floatingActionButton: FloatingActionButton(
-      onPressed: () => onImageButtonPressed(ImageSource.camera, context: context),
+        onPressed: () {
+          onImageButtonPressed(ImageSource.camera, context: context);
+          isCapture = !isCapture;
+          setState(() {});
+        }
     ),
   );
 
