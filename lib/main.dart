@@ -150,7 +150,9 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
               ElevatedButton(
                 onPressed: () async {
                   Uint8List content = await _imageFile!.readAsBytes();
-                  uploadImageToAzure(context, content);
+                  await uploadImageToAzure(context, content);
+                  await Navigator.of(context).push<void>(
+                      MaterialPageRoute(builder: (_) => WebViewScreen()));
                 },
                 child: Text("決定！"),
               ),
