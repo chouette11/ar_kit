@@ -33,6 +33,7 @@ dependencies:
   azblob: ^2.0.0
   webview_flutter: ^2.0.13
   hexcolor: ^2.0.5
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,9 @@ flutter:
     - family: Noto
       fonts:
         - asset: fonts/NotoSansJP-Regular.otf
+    - family: Dela
+      fonts:
+        - asset: fonts/DelaGothicOne-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
