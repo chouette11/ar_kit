@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:ar_kit/azblob.dart';
+import 'package:ar_kit/post.dart';
 import 'package:ar_kit/webview.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/cupertino.dart';
@@ -114,6 +115,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  await postDistance("0.454");
                   Uint8List content = await _imageFile!.readAsBytes();
                   await uploadImageToAzure(context, content);
                   await Navigator.of(context).push<void>(
