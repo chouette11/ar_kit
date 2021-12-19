@@ -150,19 +150,19 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                     padding: const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                             "➀円の中心をタップ！\n",
                           style: TextStyle(
-                            height: 1,
+                            height: 0,
                             fontSize: 26,
                           ),
                         ),
                         Text(
-                          "デバイスと円の距離から円の大きさを求めます",
+                          "デバイスと円の距離から円の大きさを\n求めます!\nできるだけ大きな円を描こう！",
                           style: TextStyle(
-                            height: 0,
+                            height: 1,
                           ),
                         ),
                         Padding(
@@ -170,7 +170,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                           child: Text(
                             "➁右下のボタンをタップ\n",
                             style: TextStyle(
-                              height: 1,
+                              height: 0,
                               fontSize: 26,
                             ),
                           ),
@@ -178,7 +178,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                         Text(
                             "円がどれだけ真円に近いか解析します！",
                           style: TextStyle(
-                            height: 1
+                            height: 0,
                           ),
                         ),
                         Padding(
@@ -223,7 +223,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
             (tap) => tap.type == ARKitHitTestResultType.existingPlaneUsingExtent,
       );
 
-        _onPlaneTapHandler(planeTap!.worldTransform, planeTap!.distance);
+        _onPlaneTapHandler(planeTap!.worldTransform, planeTap.distance);
         distance = planeTap.distance;
         setState(() {
 

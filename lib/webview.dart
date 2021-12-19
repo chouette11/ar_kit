@@ -19,7 +19,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: SafeArea(child: _buildBody()),
     );
   }
 
