@@ -33,7 +33,7 @@ dependencies:
   azblob: ^2.0.0
   webview_flutter: ^2.0.13
   hexcolor: ^2.0.5
-  http: ^0.13.3
+  http: ^0.13.0
 
 dev_dependencies:
   flutter_test:
