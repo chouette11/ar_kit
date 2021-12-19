@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
-void main() => runApp(MaterialApp(theme: ThemeData(fontFamily: "Noto"),home: MyApp()));
+void main() => runApp(MaterialApp(theme: ThemeData(fontFamily: "Noto", primaryColor: HexColor("#ff99cc")),home: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
@@ -25,16 +25,24 @@ class _MyAppState extends State<MyApp> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 48,
+        toolbarHeight: 52,
         backgroundColor: HexColor("#ff99cc"),
-        title: const Text('ARKit Demo'),
+        title: const Text('あったまる'),
       ),
       body: Center(
-        child: ElevatedButton(
-          child: Text("aa"),
-          onPressed: () => Navigator.of(context).push<void>(
-              MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
-        ),
+          child: GestureDetector(
+            onTap:() => Navigator.of(context).push<void>(
+                MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
+            child: Container(
+              width: 160,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Center(child: Text("スタート！", style: TextStyle(fontSize: 24, color: Colors.white),)),
+            ),
+          )
       ),
     );
   }
@@ -83,7 +91,9 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Distance Tracking Sample')),
+    appBar: AppBar(toolbarHeight: 52,
+      backgroundColor: HexColor("#ff99cc"),
+      title: const Text('あったまる'),),
     body: Container(
       child:
       isCapture ?
@@ -114,6 +124,9 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                     MaterialPageRoute(builder: (c) => DistanceTrackingPage())),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: HexColor("#ff99cc"), //ボタンの背景色
+                ),
                 onPressed: () async {
                   await postDistance("0.454");
                   Uint8List content = await _imageFile!.readAsBytes();
@@ -144,9 +157,9 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.4,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(),
-                    color: Colors.white
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(),
+                      color: Colors.white
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 0),
@@ -155,7 +168,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                            "➀円の中心をタップ！\n",
+                          "➀円の中心をタップ！\n",
                           style: TextStyle(
                             height: 0,
                             fontSize: 26,
@@ -178,7 +191,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                           ),
                         ),
                         Text(
-                            "円がどれだけ真円に近いか解析します！",
+                          "円がどれだけ真円に近いか解析します！",
                           style: TextStyle(
                             height: 0,
                           ),
@@ -186,11 +199,14 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 16),
                           child: ElevatedButton(
-                              onPressed: () {
-                                isModal = false;
-                                setState(() {});
-                              },
-                              child: Text("OK!"),
+                            onPressed: () {
+                              isModal = false;
+                              setState(() {});
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: HexColor("#ff99cc"), //ボタンの背景色
+                            ),
+                            child: Text("OK!"),
                           ),
                         ),
                       ],
@@ -205,11 +221,12 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
       ),
     ),
     floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          onImageButtonPressed(ImageSource.camera, context: context);
-          isCapture = !isCapture;
-          setState(() {});
-        },
+      backgroundColor: HexColor("#ff99cc"),
+      onPressed: () {
+        onImageButtonPressed(ImageSource.camera, context: context);
+        isCapture = !isCapture;
+        setState(() {});
+      },
       child: Icon(
         Icons.camera_alt_outlined,
       ),
@@ -225,11 +242,11 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
             (tap) => tap.type == ARKitHitTestResultType.existingPlaneUsingExtent,
       );
 
-        _onPlaneTapHandler(planeTap!.worldTransform, planeTap.distance);
-        distance = planeTap.distance;
-        setState(() {
+      _onPlaneTapHandler(planeTap!.worldTransform, planeTap.distance);
+      distance = planeTap.distance;
+      setState(() {
 
-        });
+      });
 
     };
   }
