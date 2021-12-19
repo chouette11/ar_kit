@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         toolbarHeight: 52,
         backgroundColor: HexColor("#ff99cc"),
-        title: const Text('あったまる'),
+        title: const Text('あったまる', style: TextStyle(color: Colors.white),),
       ),
       body: Center(
           child: GestureDetector(
@@ -93,7 +93,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(toolbarHeight: 52,
       backgroundColor: HexColor("#ff99cc"),
-      title: const Text('あったまる'),),
+      title: const Text('あったまる', style: TextStyle(color: Colors.white),), ),
     body: Container(
       child:
       isCapture ?
