@@ -3,13 +3,15 @@ import 'dart:typed_data';
 import 'package:azblob/azblob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future uploadImageToAzure(BuildContext context, Uint8List content) async {
   try {
     var now = DateTime.now();
     String fileName = "test${now.toString()}";
+    String key = dotenv.env["CONNECTION_KEY"] ?? "not found";
     // read file as Uint8List
-    var storage = AzureStorage.parse('DefaultEndpointsProtocol=https;AccountName=storageaccountankir99ce;AccountKey=LYbm4AXd2NwOFSeq0xuoxQGo90QncETsh3XuhgbWcR/jHT9sXkx+hM3yLl2jdQSQzDfhXCCkZKHIcSi9APDkcQ==;EndpointSuffix=core.windows.net');
+    var storage = AzureStorage.parse(key);
     String container = "images";
     // get the mine type of the file
     await storage.putBlob(

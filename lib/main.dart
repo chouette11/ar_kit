@@ -7,12 +7,15 @@ import 'package:ar_kit/webview.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:collection/collection.dart';
 
-void main() => runApp(MaterialApp(theme: ThemeData(fontFamily: "Noto", primaryColor: HexColor("#ff99cc")),home: MyApp()));
+void main() async {
+  await dotenv.load();
+  runApp(MaterialApp(theme: ThemeData(fontFamily: "Noto", primaryColor: HexColor("#ff99cc")),home: MyApp()));}
 
 class MyApp extends StatefulWidget {
   @override
