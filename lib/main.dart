@@ -128,7 +128,7 @@ class _DistanceTrackingPageState extends State<DistanceTrackingPage> {
                   primary: HexColor("#ff99cc"), //ボタンの背景色
                 ),
                 onPressed: () async {
-                  await postDistance("0.454");
+                  await postDistance(distance.toStringAsFixed(2));
                   Uint8List content = await _imageFile!.readAsBytes();
                   await uploadImageToAzure(context, content);
                   await Navigator.of(context).push<void>(

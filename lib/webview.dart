@@ -36,7 +36,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   Widget _buildWebView() {
     return WebView(
-      initialUrl: 'https://c667-133-202-92-109.ngrok.io/',
+      initialUrl: 'https://attamaru2.azurewebsites.net/result',
       // jsを有効化
       javascriptMode: JavascriptMode.unrestricted,
       // controllerを登録
